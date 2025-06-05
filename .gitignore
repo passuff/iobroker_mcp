@@ -4,10 +4,6 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
-
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Runtime data
 pids
@@ -25,7 +21,7 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
 # Bower dependency directory (https://bower.io/)
@@ -117,4 +113,18 @@ build/
 Thumbs.db
 
 # ioBroker specific
+iob_npm.done
+
+# Test files
+test/*.xml
+test/tmp/
+
+# Windows
+desktop.ini
+
+# npm package lock
+package-lock.json
+
+# ioBroker dev-server
+.dev-server/
 iob_npm.done 
