@@ -1,17 +1,17 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./build"
+    "rootDir": ".",
+    "outDir": "build"
   },
   "include": [
-    "src/**/*"
+    "src/**/*.ts",
+    "lib/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "build",
-    "test",
-    "admin",
-    "**/*.test.ts"
+    "build/**",
+    "node_modules/**",
+    "admin/**",
+    "test/**"
   ]
 } 

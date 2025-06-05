@@ -187,7 +187,7 @@ export function registerSystemTools(server: McpServer, connection: any) {
             command: z.enum(["update", "upgrade", "status", "repo", "list"]).describe("Command to execute"),
             params: z.string().optional().describe("Additional parameters for the command")
         },
-        async ({ command, params }) => {
+        async ({ command }) => {
             try {
                 // In a real implementation, this would execute actual ioBroker commands
                 // For security reasons, this is limited to safe read-only commands

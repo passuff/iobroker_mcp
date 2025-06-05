@@ -1,6 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z } from "zod";
 
 // Import tool handlers
 import { registerStateTools } from "./tools/states.js";
@@ -12,7 +11,6 @@ import { registerSystemTools } from "./tools/system.js";
 const namespace = process.env.IOBROKER_NAMESPACE || 'mcp-server.0';
 const iobrokerHost = process.env.IOBROKER_HOST || 'localhost';
 const iobrokerPort = process.env.IOBROKER_PORT || '8081';
-const apiKey = process.env.MCP_API_KEY || '';
 const enableAuth = process.env.MCP_ENABLE_AUTH === 'true';
 
 // Create MCP server instance
@@ -52,7 +50,7 @@ function createIoBrokerConnection() {
         return response.json();
     }
     
-    return {
+    const connection = {
         namespace,
         
         // State operations using REST API
@@ -87,7 +85,7 @@ function createIoBrokerConnection() {
         },
         
         getStatesPattern: async (pattern: string) => {
-            return this.getForeignStates(pattern);
+            return connection.getForeignStates(pattern);
         },
         
         // Object operations using REST API
@@ -118,7 +116,7 @@ function createIoBrokerConnection() {
                     url += `&type=${type}`;
                 }
                 const response = await apiRequest('GET', url);
-                return Array.isArray(response) ? response : Object.values(response);
+                return Array.isArray(response) ? response : Object.values(response as Record<string, unknown>);
             } catch (error) {
                 console.error(`Error getting objects with pattern ${pattern}:`, error);
                 return [];
@@ -126,7 +124,7 @@ function createIoBrokerConnection() {
         },
         
         getObjectList: async (pattern: string) => {
-            return this.getForeignObjects(pattern);
+            return connection.getForeignObjects(pattern);
         },
         
         // Logging
@@ -137,19 +135,8 @@ function createIoBrokerConnection() {
             debug: (msg: string) => console.debug(`[DEBUG] ${msg}`)
         }
     };
-}
-
-// Authentication middleware
-function checkAuth(request: any): boolean {
-    if (!enableAuth) return true;
     
-    const authHeader = request.headers?.authorization;
-    if (!authHeader) return false;
-    
-    const [type, token] = authHeader.split(' ');
-    if (type !== 'Bearer' || token !== apiKey) return false;
-    
-    return true;
+    return connection;
 }
 
 // Register all tools

@@ -15,7 +15,6 @@ import * as fs from 'fs';
 class McpServer extends utils.Adapter {
     private mcpServerProcess: ChildProcess | null = null;
     private mcpProxyProcess: ChildProcess | null = null;
-    private requestCount = 0;
 
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({

@@ -229,12 +229,11 @@ export function registerAdapterTools(server: McpServer, connection: any) {
     // Tool: Get Adapter Logs
     server.tool(
         "iobroker_getAdapterLogs",
-        "Get recent logs from an adapter instance",
+        "Get recent log entries for an adapter instance",
         {
-            instance: z.string().describe("Instance ID (e.g., 'hm-rpc.0')"),
-            lines: z.number().optional().default(50).describe("Number of log lines to retrieve")
+            instance: z.string().describe("Instance ID (e.g., 'hm-rpc.0')")
         },
-        async ({ instance, lines }) => {
+        async ({ instance }) => {
             try {
                 // In a real implementation, this would query the log database
                 // For now, we'll return a mock response
