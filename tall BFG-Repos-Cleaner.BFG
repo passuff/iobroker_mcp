@@ -1,0 +1,2 @@
+[33ma4d1738[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Remove .cursor/ directory from repository
+[33m152ca0a[m Entferne alle Dateien des ioBroker MCP-Servers, einschließlich Konfigurationsdokumentation, Installationsskripten und Quellcode. Dies bereinigt die Codebasis und entfernt nicht mehr benötigte Komponenten.

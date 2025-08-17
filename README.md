@@ -155,7 +155,7 @@ Add to Cursor MCP settings:
 
 ### Query recent sensor data:
 ```
-getHistory for tuya.0.bf7200ddef31e2095bgr46.106, last 35 minutes
+getHistory for tuya.0.bf7200ddef31e20s5bgr46.106, last 35 minutes
 ```
 
 ### Restart an adapter:
@@ -211,9 +211,6 @@ This standalone approach is ideal when:
 
 ## Additional Documentation
 
-- **[RULES.md](./RULES.md)** - Usage rules and best practices for the MCP server
-- **[IOBROKER_SCRIPT_EXAMPLES.md](./IOBROKER_SCRIPT_EXAMPLES.md)** - Practical examples for ioBroker script development
-- **[docs/iobroker_objects.md](./docs/iobroker_objects.md)** - Detailed description of ioBroker object structure
 - **[/standalone-mcp-server/CURSOR_SETUP.md](./standalone-mcp-server/CURSOR_SETUP.md)** - Cursor-specific setup
 
 ## License
