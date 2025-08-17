@@ -1,43 +1,43 @@
-# Cursor Integration für ioBroker MCP Server
+# Cursor Integration for ioBroker MCP Server
 
-## Voraussetzungen
+## Prerequisites
 
-1. ioBroker läuft und ist erreichbar
-2. **ioBroker REST API Adapter installiert und konfiguriert** ⭐ **WICHTIG!**
-3. Node.js ist auf deinem Windows-PC installiert
-4. Der Standalone MCP Server ist installiert und gebaut
+1. ioBroker is running and accessible
+2. **ioBroker REST API Adapter installed and configured** ⭐ **IMPORTANT!**
+3. Node.js is installed on your Windows PC
+4. The Standalone MCP Server is installed and built
 
 ### **REST API Installation:**
 ```bash
-# Im ioBroker Admin-Interface:
-# 1. Adapter → REST API installieren
-# 2. Instanz erstellen (z.B. rest-api.0)
-# 3. Port konfigurieren (Standard: 8087)
-# 4. Authentication aktivieren falls gewünscht
-# 5. Instanz starten
-# 6. Simple API deaktivieren (wichtig!)
+# In ioBroker Admin Interface:
+# 1. Adapters → Install REST API
+# 2. Create instance (e.g., rest-api.0)
+# 3. Configure port (default: 8087)
+# 4. Enable authentication if desired
+# 5. Start instance
+# 6. Disable Simple API (important!)
 ```
 
-**Wichtig**: Der MCP Server verwendet ausschließlich die REST API. Die Simple API muss deaktiviert sein!
+**Important**: The MCP server uses exclusively the REST API. The Simple API must be disabled!
 
-## Installation des MCP Servers
+## MCP Server Installation
 
-1. Öffne ein Terminal im `standalone-mcp-server` Verzeichnis
-2. Führe aus: `install.bat`
-3. Bearbeite die `.env` Datei mit deinen ioBroker-Einstellungen:
+1. Open a terminal in the `standalone-mcp-server` directory
+2. Run: `install.bat`
+3. Edit the `.env` file with your ioBroker settings:
    ```env
    IOBROKER_HOST=192.168.1.19
    IOBROKER_PORT=8087
    ```
 
-## Cursor Konfiguration
+## Cursor Configuration
 
-1. Öffne Cursor
-2. Gehe zu: File → Preferences → Settings
-3. Suche nach "MCP"
-4. Klicke auf "Edit in settings.json"
+1. Open Cursor
+2. Go to: File → Preferences → Settings
+3. Search for "MCP"
+4. Click "Edit in settings.json"
 
-5. Füge folgende Konfiguration hinzu:
+5. Add the following configuration:
 
 ```json
 {
@@ -53,14 +53,14 @@
 }
 ```
 
-**Wichtig**: Passe den Pfad an deine Installation an!
+**Important**: Adjust the path to your installation!
 
-## Alternative: Mit MCP-Proxy für Remote-Zugriff
+## Alternative: With MCP-Proxy for Remote Access
 
-Wenn du den MCP-Server nicht lokal laufen lassen möchtest:
+If you don't want to run the MCP server locally:
 
-1. Installiere den MCP-Proxy auf dem ioBroker-System
-2. Konfiguriere Cursor für Remote-Zugriff:
+1. Install the MCP-Proxy on the ioBroker system
+2. Configure Cursor for remote access:
 
 ```json
 {
@@ -75,96 +75,96 @@ Wenn du den MCP-Server nicht lokal laufen lassen möchtest:
 }
 ```
 
-## Verfügbare Befehle in Cursor
+## Available Commands in Cursor
 
-Nach der Konfiguration kannst du in Cursor folgende Befehle nutzen:
+After configuration, you can use the following commands in Cursor:
 
-### States lesen:
+### Read states:
 ```
-Zeige mir den Wert von system.adapter.admin.0.alive
-```
-
-### States mit Sonderzeichen:
-```
-Zeige mir den Wert von shelly.0.SHPLG-S#9A3649#1.Relay0.Power
-```
-**Hinweis**: Sonderzeichen wie `#` werden automatisch URL-encoded.
-
-### States schreiben:
-```
-Setze den State hm-rpc.0.ABC123.1.STATE auf true
+Show me the value of system.adapter.admin.0.alive
 ```
 
-### Mehrere States abrufen:
+### States with special characters:
 ```
-Liste alle States die mit hm-rpc.0 beginnen
+Show me the value of shelly.0.SHPLG-S#9A3649#1.Relay0.Power
+```
+**Note**: Special characters like `#` are automatically URL-encoded.
+
+### Write states:
+```
+Set the state hm-rpc.0.ABC123.1.STATE to true
 ```
 
-### Objekte abrufen:
+### Get multiple states:
 ```
-Zeige mir das Objekt system.adapter.admin.0
-```
-
-### Script-Management (NEU):
-```
-Starte das Script javascript.0.Lüfter_Bad_Anbau
-Stoppe das Script javascript.0.Lüfter_Bad_Anbau
+List all states that start with hm-rpc.0
 ```
 
-### Log-Management (NEU):
+### Get objects:
 ```
-Zeige mir die Log-Dateien für localhost
-Füge einen Log-Eintrag hinzu: "Test-Nachricht" mit Level "info"
-```
-
-### File-Operationen (NEU):
-```
-Lies die Datei vis.0/main/vis-views.json
-Schreibe in die Datei vis.0/main/test.json den Inhalt: {"test": true}
+Show me the object system.adapter.admin.0
 ```
 
-### History-Daten (NEU):
+### Script Management (NEW):
 ```
-Zeige mir die History-Daten für system.adapter.admin.0.memRss der letzten Stunde
-Zeige mir die durchschnittlichen Werte für zigbee.0.00158d008b3d3ece.humidity der letzten 24h mit 1h-Schritten
-Zeige mir die letzten 10 Werte für shelly.0.SHPLG-S#9A3649#1.Relay0.Power
-```
-
-### Nachrichten senden:
-```
-Sende eine Nachricht an telegram.0 mit dem Text "Hallo von Cursor"
+Start the script javascript.0.Lüfter_Bad_Anbau
+Stop the script javascript.0.Lüfter_Bad_Anbau
 ```
 
-## Implementierte REST API Funktionen
+### Log Management (NEW):
+```
+Show me the log files for localhost
+Add a log entry: "Test message" with level "info"
+```
 
-### ✅ Bereits implementiert (REST API):
+### File Operations (NEW):
+```
+Read the file vis.0/main/vis-views.json
+Write to file vis.0/main/test.json the content: {"test": true}
+```
+
+### History Data (NEW):
+```
+Show me the history data for system.adapter.admin.0.memRss for the last hour
+Show me the average values for zigbee.0.00158d008b3d3ece.humidity for the last 24h with 1h steps
+Show me the last 10 values for shelly.0.SHPLG-S#9A3649#1.Relay0.Power
+```
+
+### Send messages:
+```
+Send a message to telegram.0 with the text "Hello from Cursor"
+```
+
+## Implemented REST API Functions
+
+### ✅ Already implemented (REST API):
 - **States**: `getState()`, `setState()`, `getStates()`
 - **Objects**: `getObject()`, `getObjects()`
 - **Scripts**: `startScript()`, `stopScript()`
 - **Logs**: `readLogs()`, `logMessage()`
 - **Files**: `readFile()`, `writeFile()`
 - **History**: `getHistory()` ⭐
-- **Messages**: `sendTo()` (vollständig)
+- **Messages**: `sendTo()` (complete)
 
-### ❌ Noch NICHT implementiert:
+### ❌ NOT yet implemented:
 - **Admin**: `getAdapters()`, `getInstances()`, etc.
 - **Binary States**: `getBinaryState()`, `setBinaryState()`
-- **Advanced sendTo**: Komplexe Nachrichten mit Payload
+- **Advanced sendTo**: Complex messages with payload
 
-## Fehlerbehebung
+## Troubleshooting
 
 ### "Connection refused"
-- Prüfe ob ioBroker läuft
-- Prüfe ob die REST API aktiviert ist
-- Prüfe die Firewall-Einstellungen
+- Check if ioBroker is running
+- Check if REST API is enabled
+- Check firewall settings
 
-### "Not found: datapoint" bei Sonderzeichen
-- **Problem**: Datenpunkte mit `#` werden abgeschnitten
-- **Lösung**: Der MCP-Server verwendet jetzt automatisch URL-Encoding
-- **Beispiel**: `shelly.0.SHPLG-S#9A3649#1.Relay0.Power` wird korrekt verarbeitet
+### "Not found: datapoint" with special characters
+- **Problem**: Datapoints with `#` are truncated
+- **Solution**: The MCP server now automatically uses URL-encoding
+- **Example**: `shelly.0.SHPLG-S#9A3649#1.Relay0.Power` is processed correctly
 
-### URL-Encoding für Sonderzeichen
-Der MCP-Server behandelt automatisch folgende Sonderzeichen:
+### URL-Encoding for Special Characters
+The MCP server automatically handles the following special characters:
 - `#` → `%23`
 - `%` → `%25`
 - `&` → `%26`
@@ -172,61 +172,61 @@ Der MCP-Server behandelt automatisch folgende Sonderzeichen:
 - `=` → `%3D`
 - `@` → `%40`
 
-**Beispiel**:
+**Example**:
 ```
 shelly.0.SHPLG-S#9A3649#1.Relay0.Power
 ```
-wird intern zu:
+becomes internally:
 ```
 shelly.0.SHPLG-S%239A3649%231.Relay0.Power
 ```
 
 ### "Function not supported"
-- **Problem**: Einige REST API Funktionen sind über Simple API nicht verfügbar
-- **Lösung**: Verwende die vollständige REST API oder Admin-Interface
-- **Betroffene Funktionen**: Komplexe `sendTo()`, Admin-Funktionen
+- **Problem**: Some REST API functions are not available via Simple API
+- **Solution**: Use the full REST API or Admin interface
+- **Affected functions**: Complex `sendTo()`, Admin functions
 
-### "Cannot GET /get/..." oder "Cannot GET /history"
-- **Problem**: REST API Adapter ist nicht installiert oder nicht gestartet
-- **Lösung**: 
-  1. Im ioBroker Admin-Interface: Adapter → REST API installieren
-  2. Instanz erstellen und konfigurieren
-  3. Port 8087 freigeben
-  4. Instanz starten
-  5. **Simple API deaktivieren** (wichtig!)
-  6. MCP Server neu starten
+### "Cannot GET /get/..." or "Cannot GET /history"
+- **Problem**: REST API adapter is not installed or not started
+- **Solution**: 
+  1. In ioBroker Admin interface: Adapters → Install REST API
+  2. Create instance and configure
+  3. Open port 8087
+  4. Start instance
+  5. **Disable Simple API** (important!)
+  6. Restart MCP server
 
 ### "Function not supported"
-- **Problem**: Einige REST API Funktionen sind über Simple API nicht verfügbar
-- **Lösung**: Verwende die vollständige REST API oder Admin-Interface
-- **Betroffene Funktionen**: Komplexe `sendTo()`, Admin-Funktionen
+- **Problem**: Some REST API functions are not available via Simple API
+- **Solution**: Use the full REST API or Admin interface
+- **Affected functions**: Complex `sendTo()`, Admin functions
 
-## History-Funktionen
+## History Functions
 
-Die `getHistory`-Funktion unterstützt verschiedene Ausgabeformate für bessere LLM-Lesbarkeit:
+The `getHistory` function supports various output formats for better LLM readability:
 
-### Verfügbare Formate:
+### Available Formats:
 
-1. **`raw`** (Standard): Vollständige ioBroker-Antwort mit allen Metadaten
-2. **`simple`**: Vereinfachtes Tabellenformat mit [timestamp, value] Paaren
-3. **`csv`**: CSV-ähnliches Format für einfache Verarbeitung
-4. **`summary`**: Zusammenfassung mit Statistiken und Trend-Analyse
-5. **`hourly`**: Stündliche Durchschnitte
-6. **`daily`**: Tägliche Durchschnitte
+1. **`raw`** (default): Complete ioBroker response with all metadata
+2. **`simple`**: Simplified table format with [timestamp, value] pairs
+3. **`csv`**: CSV-like format for easy processing
+4. **`summary`**: Summary with statistics and trend analysis
+5. **`hourly`**: Hourly averages
+6. **`daily`**: Daily averages
 
-### Beispiel-Verwendung:
+### Example Usage:
 
 ```javascript
-// Zusammenfassung der letzten Stunde
+// Summary of the last hour
 getHistory("sensor.id", {start: "1h", end: "now"}, "summary")
 
-// Stündliche Durchschnitte der letzten 24 Stunden
+// Hourly averages of the last 24 hours
 getHistory("sensor.id", {start: "24h", end: "now"}, "hourly")
 ```
 
-### Format-Beispiele:
+### Format Examples:
 
-**Summary-Format:**
+**Summary Format:**
 ```json
 {
   "id": "sensor.id",
@@ -245,7 +245,7 @@ getHistory("sensor.id", {start: "24h", end: "now"}, "hourly")
 }
 ```
 
-**Simple-Format:**
+**Simple Format:**
 ```json
 {
   "id": "sensor.id",
@@ -262,25 +262,25 @@ getHistory("sensor.id", {start: "24h", end: "now"}, "hourly")
 }
 ```
 
-## Chart-Viewer Funktion
+## Chart Viewer Function
 
-Die `createChartViewer`-Funktion erstellt interaktive HTML-Charts für mehrere Sensoren:
+The `createChartViewer` function creates interactive HTML charts for multiple sensors:
 
-### Verwendung:
+### Usage:
 
 ```javascript
 createChartViewer({
-  title: "Meine Sensoren",
+  title: "My Sensors",
   data: [
     {
       id: "sensor1.id",
-      label: "Temperatur",
+      label: "Temperature",
       color: "#FF0000",
       data: [[timestamp1, value1], [timestamp2, value2], ...]
     },
     {
       id: "sensor2.id", 
-      label: "Feuchtigkeit",
+      label: "Humidity",
       color: "#00FF00",
       data: [[timestamp1, value1], [timestamp2, value2], ...]
     }
@@ -292,30 +292,30 @@ createChartViewer({
 
 ### Features:
 
-- **Interaktive Charts**: Zoom, Pan, Tooltips
-- **Mehrere Signale**: Bis zu 10 verschiedene Sensoren gleichzeitig
-- **Zeitbasierte X-Achse**: Automatische Zeitformatierung
-- **Responsive Design**: Passt sich der Bildschirmgröße an
-- **Farbkodierung**: Individuelle Farben pro Sensor
+- **Interactive Charts**: Zoom, Pan, Tooltips
+- **Multiple Signals**: Up to 10 different sensors simultaneously
+- **Time-based X-axis**: Automatic time formatting
+- **Responsive Design**: Adapts to screen size
+- **Color Coding**: Individual colors per sensor
 
 ### Workflow:
 
-1. `getHistory()` für jeden Sensor mit `format: "simple"` aufrufen
-2. Daten in `createChartViewer()` übergeben
-3. Interaktiven Chart anzeigen
+1. Call `getHistory()` for each sensor with `format: "simple"`
+2. Pass data to `createChartViewer()`
+3. Display interactive chart
 
-## Test der Verbindung
+## Testing the Connection
 
-Nach der Konfiguration kannst du testen:
+After configuration, you can test:
 
 ```
-Zeige mir den Wert von system.adapter.admin.0.alive
+Show me the value of system.adapter.admin.0.alive
 ```
 
-Sollte `true` zurückgeben, wenn ioBroker läuft.
+Should return `true` if ioBroker is running.
 
-## Performance-Tipps
+## Performance Tips
 
-1. **Performance**: Für bessere Performance nutze spezifische State-IDs statt Patterns
-2. **Sicherheit**: Nutze HTTPS und Authentifizierung in Produktivumgebungen
-3. **Logging**: Prüfe die Cursor Developer Tools (Help → Toggle Developer Tools) für Fehler 
+1. **Performance**: For better performance, use specific state IDs instead of patterns
+2. **Security**: Use HTTPS and authentication in production environments
+3. **Logging**: Check Cursor Developer Tools (Help → Toggle Developer Tools) for errors 

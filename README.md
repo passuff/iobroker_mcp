@@ -8,42 +8,75 @@ A comprehensive MCP (Model Context Protocol) server for integrating ioBroker wit
 
 This project provides a standalone MCP server that communicates with ioBroker via REST API. The server enables AI assistants to gain full access to ioBroker functionalities.
 
-## Main Components
+## Features
 
-- **`/standalone-mcp-server/`** - The functional MCP server
-  - Standalone Node.js application
-  - Communicates with ioBroker via REST API
-  - No installation as ioBroker adapter required
-  - Intelligent timezone handling
-  - Robust error handling
+- **No ioBroker adapter installation required** - Works as standalone server
+- **Full ioBroker integration** - Access to states, objects, history, files, and adapter control
+- **Intelligent timezone handling** - Automatic local timezone detection and conversion
+- **Robust error handling** - Comprehensive error reporting and fallback mechanisms
+- **Simple configuration** - Environment-based setup
+- **Real-time data access** - History queries with flexible time formats
 
-- **`/docs/`** - Project documentation
-  - Concepts and background information
-  - Configuration guides
+## Prerequisites
 
-## Documentation
+- Node.js 18 or higher
+- ioBroker with REST API enabled
+- ioBroker History adapter (for historical data queries)
+- Network access to ioBroker instance
 
-- **[RULES.md](./RULES.md)** - Usage rules and best practices for the MCP server
-- **[IOBROKER_SCRIPT_EXAMPLES.md](./IOBROKER_SCRIPT_EXAMPLES.md)** - Practical examples for ioBroker script development
-- **[docs/iobroker_objects.md](./docs/iobroker_objects.md)** - Detailed description of ioBroker object structure
-- **[/standalone-mcp-server/README.md](./standalone-mcp-server/README.md)** - Detailed installation guide
-- **[/standalone-mcp-server/CURSOR_SETUP.md](./standalone-mcp-server/CURSOR_SETUP.md)** - Cursor-specific setup
-
-## Installation and Usage
-
-For detailed installation and configuration instructions, see:
-- [`/standalone-mcp-server/README.md`](./standalone-mcp-server/README.md) - Main guide
-- [`/standalone-mcp-server/CURSOR_SETUP.md`](./standalone-mcp-server/CURSOR_SETUP.md) - Cursor-specific setup
-
-## Quick Start
+## Installation
 
 ```bash
+# Clone or download this folder
 cd standalone-mcp-server
+
+# Install dependencies
 npm install
+
+# Copy environment file
 cp .env.example .env
+
 # Edit .env with your ioBroker settings
+```
+
+## Configuration
+
+Edit `.env` file:
+
+```env
+IOBROKER_HOST=192.168.1.19
+IOBROKER_PORT=8087
+IOBROKER_PROTOCOL=http
+```
+
+## Usage
+
+### Direct usage with stdio:
+
+```bash
 npm run build
 npm start
+```
+
+### With MCP Inspector:
+
+```bash
+npx @modelcontextprotocol/inspector npm start
+```
+
+### With Cursor:
+
+Add to Cursor MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "iobroker": {
+      "command": "node",
+      "args": ["C:/path/to/standalone-mcp-server/dist/index.js"]
+    }
+  }
+}
 ```
 
 ## MCP Tools Status
@@ -51,7 +84,7 @@ npm start
 ### ✅ **Working Tools (9/13)**
 
 #### **Core State Operations**
-- **`getState`** ✅ - Read a single state
+- **`getState`** ✅ - Read a single state value
 - **`setState`** ✅ - Write a state value with acknowledgment
 - **`getStates`** ✅ - Read multiple states with pattern matching
 
@@ -60,7 +93,7 @@ npm start
 - **`getObjects`** ✅ - Get multiple objects with pattern and type filtering
 
 #### **Historical Data**
-- **`getHistory`** ✅ - Historical data with intelligent timezone handling
+- **`getHistory`** ✅ - Query historical data with intelligent timezone handling
   - Supports relative time formats: "5m", "2h", "3d", "1w"
   - Supports ISO date strings: "2025-08-16T10:00:00"
   - Automatic local timezone detection and conversion
@@ -118,12 +151,30 @@ npm start
 - Efficient history queries
 - Reduced API latency
 
-## Prerequisites
+## Examples
 
-- Node.js 18 or higher
-- ioBroker with REST API enabled
-- ioBroker History adapter (for historical data queries)
-- Network access to ioBroker instance
+### Query recent sensor data:
+```
+getHistory for tuya.0.bf7200ddef31e2095bgr46.106, last 35 minutes
+```
+
+### Restart an adapter:
+```
+sendTo shelly.0 with command restart
+```
+
+### Read system states:
+```
+getStates with pattern system.adapter.admin.0.*
+```
+
+## Limitations
+
+Compared to the full adapter approach, this standalone server:
+- Cannot subscribe to state changes (no real-time events)
+- Has higher latency due to HTTP overhead
+- Requires REST API to be enabled and accessible
+- Some operations depend on ioBroker configuration (file logging, history adapter)
 
 ## Known Issues & Solutions
 
@@ -138,6 +189,32 @@ npm start
 ### **"Not exists" with readFile**
 - **Cause:** File doesn't exist or adapter not accessible
 - **Solution:** Use valid adapter instances (e.g., `admin.0`)
+
+### **Timeout errors**
+- **Cause:** Complex operations may take longer than 30 seconds
+- **Solution:** Increase timeout or optimize operations
+
+## Performance Notes
+
+- Adapter restarts may take 1-2 minutes for complex adapters
+- History queries are optimized for reasonable time ranges
+- File operations work best with valid adapter instances
+
+## When to Use
+
+This standalone approach is ideal when:
+- You need comprehensive ioBroker access from AI assistants
+- You don't want to modify your ioBroker installation
+- You need historical data analysis capabilities
+- You want to control adapters and scripts remotely
+- You're building AI-powered home automation workflows
+
+## Additional Documentation
+
+- **[RULES.md](./RULES.md)** - Usage rules and best practices for the MCP server
+- **[IOBROKER_SCRIPT_EXAMPLES.md](./IOBROKER_SCRIPT_EXAMPLES.md)** - Practical examples for ioBroker script development
+- **[docs/iobroker_objects.md](./docs/iobroker_objects.md)** - Detailed description of ioBroker object structure
+- **[/standalone-mcp-server/CURSOR_SETUP.md](./standalone-mcp-server/CURSOR_SETUP.md)** - Cursor-specific setup
 
 ## License
 
