@@ -1,142 +1,144 @@
 # ioBroker MCP Server
 
-Ein umfassender MCP (Model Context Protocol) Server für die Integration von ioBroker mit KI-Assistenten wie Claude/Cursor.
+> **Built with Vibe Coding** - This project was developed using advanced AI-assisted coding techniques for optimal performance and maintainability.
 
-## Überblick
+A comprehensive MCP (Model Context Protocol) server for integrating ioBroker with AI assistants like Claude/Cursor.
 
-Dieses Projekt stellt einen eigenständigen MCP-Server bereit, der über die REST-API mit ioBroker kommuniziert. Der Server ermöglicht es KI-Assistenten, vollständigen Zugriff auf ioBroker-Funktionalitäten zu erhalten.
+## Overview
 
-## Hauptkomponenten
+This project provides a standalone MCP server that communicates with ioBroker via REST API. The server enables AI assistants to gain full access to ioBroker functionalities.
 
-- **`/standalone-mcp-server/`** - Der funktionierende MCP-Server
-  - Eigenständige Node.js-Anwendung
-  - Kommuniziert über REST-API mit ioBroker
-  - Keine Installation als ioBroker-Adapter erforderlich
-  - Intelligente Zeitzonen-Behandlung
-  - Robuste Fehlerbehandlung
+## Main Components
 
-- **`/docs/`** - Projektdokumentation
-  - Konzepte und Hintergrundinformationen
-  - Konfigurationsanleitungen
+- **`/standalone-mcp-server/`** - The functional MCP server
+  - Standalone Node.js application
+  - Communicates with ioBroker via REST API
+  - No installation as ioBroker adapter required
+  - Intelligent timezone handling
+  - Robust error handling
 
-## Dokumentation
+- **`/docs/`** - Project documentation
+  - Concepts and background information
+  - Configuration guides
 
-- **[RULES.md](./RULES.md)** - Nutzungsregeln und Best Practices für den MCP-Server
-- **[IOBROKER_SCRIPT_EXAMPLES.md](./IOBROKER_SCRIPT_EXAMPLES.md)** - Praktische Beispiele für ioBroker-Skript-Entwicklung
-- **[docs/iobroker_objects.md](./docs/iobroker_objects.md)** - Detaillierte Beschreibung der ioBroker-Objektstruktur
-- **[/standalone-mcp-server/README.md](./standalone-mcp-server/README.md)** - Detaillierte Installationsanleitung
-- **[/standalone-mcp-server/CURSOR_SETUP.md](./standalone-mcp-server/CURSOR_SETUP.md)** - Cursor-spezifische Einrichtung
+## Documentation
 
-## Installation und Verwendung
+- **[RULES.md](./RULES.md)** - Usage rules and best practices for the MCP server
+- **[IOBROKER_SCRIPT_EXAMPLES.md](./IOBROKER_SCRIPT_EXAMPLES.md)** - Practical examples for ioBroker script development
+- **[docs/iobroker_objects.md](./docs/iobroker_objects.md)** - Detailed description of ioBroker object structure
+- **[/standalone-mcp-server/README.md](./standalone-mcp-server/README.md)** - Detailed installation guide
+- **[/standalone-mcp-server/CURSOR_SETUP.md](./standalone-mcp-server/CURSOR_SETUP.md)** - Cursor-specific setup
 
-Die detaillierte Anleitung zur Installation und Konfiguration finden Sie in:
-- [`/standalone-mcp-server/README.md`](./standalone-mcp-server/README.md) - Hauptanleitung
-- [`/standalone-mcp-server/CURSOR_SETUP.md`](./standalone-mcp-server/CURSOR_SETUP.md) - Cursor-spezifische Einrichtung
+## Installation and Usage
 
-## Schnellstart
+For detailed installation and configuration instructions, see:
+- [`/standalone-mcp-server/README.md`](./standalone-mcp-server/README.md) - Main guide
+- [`/standalone-mcp-server/CURSOR_SETUP.md`](./standalone-mcp-server/CURSOR_SETUP.md) - Cursor-specific setup
+
+## Quick Start
 
 ```bash
 cd standalone-mcp-server
 npm install
 cp .env.example .env
-# .env mit Ihren ioBroker-Einstellungen bearbeiten
+# Edit .env with your ioBroker settings
 npm run build
 npm start
 ```
 
-## MCP-Tools Status
+## MCP Tools Status
 
-### ✅ **Funktionierende Tools (9/13)**
+### ✅ **Working Tools (9/13)**
 
 #### **Core State Operations**
-- **`getState`** ✅ - Einzelnen State lesen
-- **`setState`** ✅ - State-Wert schreiben mit Acknowledgment
-- **`getStates`** ✅ - Mehrere States mit Pattern-Matching lesen
+- **`getState`** ✅ - Read a single state
+- **`setState`** ✅ - Write a state value with acknowledgment
+- **`getStates`** ✅ - Read multiple states with pattern matching
 
 #### **Object Management**
-- **`getObject`** ✅ - Detaillierte Objekt-Informationen abrufen
-- **`getObjects`** ✅ - Mehrere Objekte mit Pattern und Type-Filtering abrufen
+- **`getObject`** ✅ - Get detailed object information
+- **`getObjects`** ✅ - Get multiple objects with pattern and type filtering
 
 #### **Historical Data**
-- **`getHistory`** ✅ - Historische Daten mit intelligenter Zeitzonen-Behandlung
-  - Unterstützt relative Zeitformate: "5m", "2h", "3d", "1w"
-  - Unterstützt ISO-Datumsstrings: "2025-08-16T10:00:00"
-  - Automatische lokale Zeitzonen-Erkennung und Konvertierung
-  - Flexible Aggregationsoptionen (min, max, avg, sum, count, onchange)
+- **`getHistory`** ✅ - Historical data with intelligent timezone handling
+  - Supports relative time formats: "5m", "2h", "3d", "1w"
+  - Supports ISO date strings: "2025-08-16T10:00:00"
+  - Automatic local timezone detection and conversion
+  - Flexible aggregation options (min, max, avg, sum, count, onchange)
 
 #### **Adapter Control**
-- **`sendTo`** ✅ - Befehle an Adapter senden
-  - Adapter-Restart/Start/Stop-Funktionalität
-  - Allgemeine Nachrichtenversendung an Adapter-Instanzen
-- **`startScript`** ✅ - JavaScript-Skripte mit Adapter-Status-Prüfung starten
+- **`sendTo`** ✅ - Send commands to adapters
+  - Adapter restart/start/stop functionality
+  - General message sending to adapter instances
+- **`startScript`** ✅ - Start JavaScript scripts with adapter status checking
 
 #### **File Operations**
-- **`writeFile`** ✅ - Dateien in ioBroker-Adapter mit Base64-Kodierung schreiben
+- **`writeFile`** ✅ - Write files to ioBroker adapters with base64 encoding
 
 #### **System Operations**
-- **`logMessage`** ✅ - Log-Einträge zu ioBroker hinzufügen
+- **`logMessage`** ✅ - Add log entries to ioBroker
 
-### ❌ **Nicht funktionierende Tools (4/13)**
+### ❌ **Non-working Tools (4/13)**
 
 #### **File Operations**
 - **`readFile`** ❌ - "Not exists" (Status: 500)
-  - **Problem:** Datei existiert nicht oder Pfad ist falsch
-  - **Lösung:** Gültige Dateipfade verwenden oder bessere Fehlerbehandlung
+  - **Problem:** File doesn't exist or path is incorrect
+  - **Solution:** Use valid file paths or better error handling
 
 #### **System Operations**
 - **`readLogs`** ❌ - "no file loggers" (Status: 500)
-  - **Problem:** ioBroker ist nicht für File-Logging konfiguriert
-  - **Lösung:** ioBroker-Konfiguration anpassen oder Tool deaktivieren
+  - **Problem:** ioBroker not configured for file logging
+  - **Solution:** Configure ioBroker or disable tool
 
 #### **Adapter Control**
-- **`sendTo` (für andere Commands)** ❌ - Timeout (30s) für bestimmte Commands
-  - **Problem:** Bestimmte Commands (wie `getScripts`) timeouten
-  - **Lösung:** Timeout erhöhen oder Command-spezifische Behandlung
+- **`sendTo` (for other commands)** ❌ - Timeout (30s) for certain commands
+  - **Problem:** Certain commands (like `getScripts`) timeout
+  - **Solution:** Increase timeout or command-specific handling
 
 #### **Script Management**
 - **`startScript`** ❌ - "javascript.0 adapter is not running"
-  - **Problem:** JavaScript-Adapter läuft nicht
-  - **Lösung:** Adapter starten oder Tool für nicht-laufende Adapter anpassen
+  - **Problem:** JavaScript adapter is not running
+  - **Solution:** Start adapter or adapt tool for non-running adapters
 
-## Besondere Features
+## Special Features
 
-### **Intelligente Zeitzonen-Behandlung**
-- Automatische Erkennung der lokalen Zeitzone
-- Flexible Eingabeformate (relative Zeiten, ISO-Daten)
-- Konsistente Ausgabe in lokaler Zeitzone
-- UTC-Konvertierung für API-Aufrufe
+### **Intelligent Timezone Handling**
+- Automatic detection of local timezone
+- Flexible input formats (relative times, ISO dates)
+- Consistent output in local timezone
+- UTC conversion for API calls
 
-### **Robuste Fehlerbehandlung**
-- Umfassende Fehlerberichterstattung
-- Fallback-Mechanismen für kritische Operationen
-- Benutzerfreundliche Fehlermeldungen
+### **Robust Error Handling**
+- Comprehensive error reporting
+- Fallback mechanisms for critical operations
+- User-friendly error messages
 
-### **Performance-Optimierungen**
-- Optimierte Adapter-Restart-Logik
-- Effiziente History-Abfragen
-- Reduzierte API-Latenz
+### **Performance Optimizations**
+- Optimized adapter restart logic
+- Efficient history queries
+- Reduced API latency
 
-## Voraussetzungen
+## Prerequisites
 
-- Node.js 18 oder höher
-- ioBroker mit aktivierter REST-API
-- ioBroker History-Adapter (für historische Datenabfragen)
-- Netzwerkzugriff auf die ioBroker-Instanz
+- Node.js 18 or higher
+- ioBroker with REST API enabled
+- ioBroker History adapter (for historical data queries)
+- Network access to ioBroker instance
 
-## Bekannte Probleme & Lösungen
+## Known Issues & Solutions
 
-### **Adapter-Restarts dauern 1-2 Minuten**
-- **Ursache:** Komplexe Adapter mit vielen verbundenen Geräten
-- **Lösung:** Normales Verhalten für Netzwerk-Adapter (Shelly, etc.)
+### **Adapter Restarts Take 1-2 Minutes**
+- **Cause:** Complex adapters with many connected devices
+- **Solution:** Normal behavior for network adapters (Shelly, etc.)
 
-### **"no file loggers" Fehler**
-- **Ursache:** ioBroker nicht für File-Logging konfiguriert
-- **Lösung:** ioBroker-Konfiguration anpassen oder Tool deaktivieren
+### **"no file loggers" Error**
+- **Cause:** ioBroker not configured for file logging
+- **Solution:** Configure ioBroker or disable tool
 
-### **"Not exists" bei readFile**
-- **Ursache:** Datei existiert nicht oder Adapter nicht zugänglich
-- **Lösung:** Gültige Adapter-Instanzen verwenden (z.B. `admin.0`)
+### **"Not exists" with readFile**
+- **Cause:** File doesn't exist or adapter not accessible
+- **Solution:** Use valid adapter instances (e.g., `admin.0`)
 
-## Lizenz
+## License
 
-MIT License - siehe [LICENSE](LICENSE) Datei für Details. 
+MIT License - see [LICENSE](LICENSE) file for details. 
